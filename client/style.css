@@ -224,7 +224,7 @@ footer {
 
 #cloud-overlay {
   display: none;
-  background-image: url("/assets/cloud.gif");
+  background-image: url("./assets/cloud.gif");
   position: fixed;
   pointer-events: none;
   inset: -50%;
