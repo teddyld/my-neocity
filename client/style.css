@@ -201,7 +201,7 @@ footer {
 /* Background Noise */
 
 #noise-overlay {
-  background-image: url("/assets/black-noise.png");
+  background-image: url("./assets/black-noise.png");
   opacity: 0.05;
   inset: -50%;
   position: fixed;
