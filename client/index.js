@@ -72,9 +72,64 @@ const checkServerStatus = async () => {
 
 checkServerStatus();
 
-// Display count of visitors
-const updateVisitors = async (cookie) => {
-  console.log("cookie", cookie);
+/* Update visit counts */
+const counterVisits = document.querySelector("#counter-visits");
+const counterUnique = document.querySelector("#counter-unique");
+const counterOnsite = document.querySelector("#counter-onsite");
+
+const updateVisits = async () => {
+  try {
+    const response = await fetch("http://localhost:5050/visits/update", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        user: localStorage.getItem("user"),
+      }),
+    });
+
+    const { user, visits, unique, online } = await response.json();
+    counterVisits.innerText = visits;
+    counterUnique.innerText = unique;
+    counterOnsite.innerText = online;
+    if (!localStorage.getItem("user")) {
+      localStorage.setItem("user", user);
+    }
+  } catch (err) {
+    addStatusFailed(serverStatus);
+  }
 };
 
-updateVisitors(document.cookie);
+// Poll count of visitors
+const POLL_INTERVAL = 600000; // 10 minutes
+const pollVisits = () => {
+  setInterval(() => {
+    updateVisits();
+  }, POLL_INTERVAL);
+};
+
+updateVisits();
+pollVisits();
+
+// Heartbeat to maintain user's online status
+const setUserOnline = async () => {
+  if (!localStorage.getItem("user")) {
+    return;
+  }
+
+  await fetch("http://localhost:5050/visits/online", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      user: localStorage.getItem("user"),
+    }),
+  });
+};
+
+const HEARTBEAT_INTERVAL = 3600000; // 1 hour
+setInterval(() => {
+  setUserOnline();
+}, HEARTBEAT_INTERVAL);
