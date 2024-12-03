@@ -1,3 +1,5 @@
+const serverUrl = "https://teddyld-api.vercel.app";
+
 // Change window title on blur
 const documentTitle = document.querySelector("title");
 
@@ -58,7 +60,7 @@ const addStatusFailed = (element) => {
 const serverStatus = document.querySelector("#server-status");
 const checkServerStatus = async () => {
   try {
-    await fetch("http://localhost:5050", {
+    await fetch(`${serverUrl}/`, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -79,7 +81,7 @@ const counterOnsite = document.querySelector("#counter-onsite");
 
 const updateVisits = async () => {
   try {
-    const response = await fetch("http://localhost:5050/visits/update", {
+    const response = await fetch(`${serverUrl}/visits/update`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -118,7 +120,7 @@ const setUserOnline = async () => {
     return;
   }
 
-  await fetch("http://localhost:5050/visits/online", {
+  await fetch(`${serverUrl}/visits/online`, {
     method: "POST",
     headers: {
       "Content-type": "application/json",

@@ -21,6 +21,7 @@ body {
   color: var(--foreground);
   font-family: "IBM-VGA", Tahoma;
   background-color: var(--background);
+  font-size: 110%;
 }
 
 p {
@@ -144,9 +145,10 @@ main {
 }
 
 /* Counter */
+
 #counter div {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.2rem;
   text-wrap: nowrap;
   justify-content: space-between;
@@ -180,7 +182,6 @@ header {
 
 footer {
   display: flex;
-  font-size: 0.9em;
   height: 2rem;
   padding: 1rem;
   flex-direction: column;
