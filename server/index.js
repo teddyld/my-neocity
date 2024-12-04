@@ -83,11 +83,11 @@ app.post("/visits/online", async (req, res) => {
 });
 
 // Mark inactive users as offline
-const POLLING_INTERVAL = 21600000; // 6 hours
+const POLLING_INTERVAL = 3600000; // 1 hour
 setInterval(async () => {
   try {
     await client.query(
-      "UPDATE users SET status = false WHERE status = true AND last_seen < NOW() - INTERVAL '1 second'"
+      "UPDATE users SET status = false WHERE status = true AND last_seen < NOW() - INTERVAL '1 hour'"
     );
   } catch (err) {
     console.error("Server error updating inactive users");
