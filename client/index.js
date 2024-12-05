@@ -92,7 +92,7 @@ const counterLoadingAnimation = (counter) => {
       randomCount += numbers[Math.floor(Math.random() * numbers.length)];
     }
     counter.innerText = randomCount;
-  }, 0);
+  }, randomDelay);
   return { id: id, delay: randomDelay };
 };
 
