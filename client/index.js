@@ -1,4 +1,4 @@
-const serverUrl = "https://teddyld-api.vercel.app";
+const serverUrl = "http://localhost:5050";
 
 // Change window title on blur
 const documentTitle = document.querySelector("title");
@@ -133,7 +133,7 @@ const counterFinishingAnimation = (counter, delay, finalCount) => {
     }
 
     startCount = startCountArray.join("");
-    counter.innerText = startCount;
+    counter.innerText = startCount.replace(/^0+/, "");
     // Interval terminating condition
     if (startCount === finalCountString) {
       counter.innerText = finalCount;
