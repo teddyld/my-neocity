@@ -13,6 +13,7 @@
 @font-face {
   font-family: "IBM-VGA";
   src: url("./assets/Ac437_IBM_VGA_8x16.ttf");
+  font-display: swap;
 }
 
 body {

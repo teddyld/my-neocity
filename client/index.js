@@ -1,4 +1,4 @@
-const serverUrl = "https://teddyld-api.vercel.app";
+const serverUrl = "http://localhost:5050";
 
 // Change window title on blur
 const documentTitle = document.querySelector("title");
@@ -79,6 +79,27 @@ const counterVisits = document.querySelector("#counter-visits");
 const counterUnique = document.querySelector("#counter-unique");
 const counterOnsite = document.querySelector("#counter-onsite");
 
+const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const MAX_DELAY = 300;
+const MIN_DELAY = 100;
+const MAX_NUMBERS = 6;
+
+const counterLoadingAnimation = (counter) => {
+  const randomDelay = Math.random() * (MAX_DELAY - MIN_DELAY) + MIN_DELAY;
+  const id = setInterval(() => {
+    let randomCount = "";
+    for (let j = 0; j < MAX_NUMBERS; j++) {
+      randomCount += numbers[Math.floor(Math.random() * numbers.length)];
+    }
+    counter.innerText = randomCount;
+  }, randomDelay);
+  return id;
+};
+
+const counterVisitsId = counterLoadingAnimation(counterVisits);
+const counterUniqueId = counterLoadingAnimation(counterUnique);
+const counterOnsiteId = counterLoadingAnimation(counterOnsite);
+
 const updateVisits = async () => {
   try {
     const response = await fetch(`${serverUrl}/visits/update`, {
@@ -90,6 +111,10 @@ const updateVisits = async () => {
         user: localStorage.getItem("user"),
       }),
     });
+
+    window.clearInterval(counterVisitsId);
+    window.clearInterval(counterUniqueId);
+    window.clearInterval(counterOnsiteId);
 
     const { user, visits, unique, online } = await response.json();
     counterVisits.innerText = visits;
