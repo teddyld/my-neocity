@@ -77,7 +77,7 @@ checkServerStatus();
 /* Update visit counts */
 const counterVisits = document.querySelector("#counter-visits");
 const counterUnique = document.querySelector("#counter-unique");
-const counterOnsite = document.querySelector("#counter-onsite");
+const counterOnline = document.querySelector("#counter-onsite");
 
 const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 const MAX_DELAY = 300;
@@ -92,13 +92,62 @@ const counterLoadingAnimation = (counter) => {
       randomCount += numbers[Math.floor(Math.random() * numbers.length)];
     }
     counter.innerText = randomCount;
-  }, randomDelay);
-  return id;
+  }, 0);
+  return { id: id, delay: randomDelay };
 };
 
-const counterVisitsId = counterLoadingAnimation(counterVisits);
-const counterUniqueId = counterLoadingAnimation(counterUnique);
-const counterOnsiteId = counterLoadingAnimation(counterOnsite);
+const counterFinishingAnimation = (counter, delay, finalCount) => {
+  let startCount = counter.innerText;
+  if (!startCount) {
+    counter.innerText = finalCount;
+    return;
+  }
+
+  let finalCountString = finalCount.toString();
+  // Length of final count
+  const finalCountLength = finalCountString.length;
+
+  // Add leading zeroes to final count
+  finalCountString =
+    "0".repeat(MAX_NUMBERS - finalCountLength) + finalCountString;
+
+  const id = setInterval(() => {
+    // Decrement leading digits to zero and remaining to digits in finalCount
+    const startCountArray = startCount.split("");
+
+    for (let i = 0; i < MAX_NUMBERS; i++) {
+      if (startCountArray[i] !== "0" && i < MAX_NUMBERS - finalCountLength) {
+        startCountArray[i] = (parseInt(startCountArray[i]) - 1).toString();
+        break;
+      } else if (
+        i >= MAX_NUMBERS - finalCountLength &&
+        startCountArray[i] !== finalCountString[i]
+      ) {
+        if (parseInt(startCountArray[i]) < parseInt(finalCountString[i])) {
+          startCountArray[i] = (parseInt(startCountArray[i]) + 1).toString();
+        } else {
+          startCountArray[i] = (parseInt(startCountArray[i]) - 1).toString();
+        }
+        break;
+      }
+    }
+
+    startCount = startCountArray.join("");
+    counter.innerText = startCount;
+    // Interval terminating condition
+    if (startCount === finalCountString) {
+      counter.innerText = finalCount;
+      clearInterval(id);
+    }
+  }, delay);
+};
+
+const { id: counterVisitsLoadingId, delay: visitsDelay } =
+  counterLoadingAnimation(counterVisits);
+const { id: counterUniqueLoadingId, delay: uniqueDelay } =
+  counterLoadingAnimation(counterUnique);
+const { id: counterOnlineLoadingId, delay: onlineDelay } =
+  counterLoadingAnimation(counterOnline);
 
 const updateVisits = async () => {
   try {
@@ -112,14 +161,17 @@ const updateVisits = async () => {
       }),
     });
 
-    window.clearInterval(counterVisitsId);
-    window.clearInterval(counterUniqueId);
-    window.clearInterval(counterOnsiteId);
+    clearInterval(counterVisitsLoadingId);
+    clearInterval(counterUniqueLoadingId);
+    clearInterval(counterOnlineLoadingId);
 
     const { user, visits, unique, online } = await response.json();
-    counterVisits.innerText = visits;
-    counterUnique.innerText = unique;
-    counterOnsite.innerText = online;
+
+    // Play finishing animation before loading true count
+    counterFinishingAnimation(counterVisits, visitsDelay, visits);
+    counterFinishingAnimation(counterUnique, uniqueDelay, unique);
+    counterFinishingAnimation(counterOnline, onlineDelay, online);
+
     if (!localStorage.getItem("user")) {
       localStorage.setItem("user", user);
     }
