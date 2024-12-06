@@ -97,7 +97,8 @@ const counterLoadingAnimation = (counter) => {
 };
 
 const counterFinishingAnimation = (counter, delay, finalCount) => {
-  let startCount = counter.innerText;
+  let startCount =
+    "0".repeat(MAX_NUMBERS - counter.innerText.length) + counter.innerText;
   if (!startCount) {
     counter.innerText = finalCount;
     return;
