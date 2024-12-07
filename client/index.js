@@ -22,31 +22,6 @@ if (window.closed) {
   cleanupEventListeners();
 }
 
-// Change webpage when the unknown button is pressed three times
-const unknownBtn = document.querySelector("#unknown-btn");
-const noiseOverlay = document.querySelector("#noise-overlay");
-const cloudOverlay = document.querySelector("#cloud-overlay");
-const nameHeader = document.querySelector("#name-header");
-let nUnknown = 0;
-
-const hideUnknown = () => {
-  unknownBtn.style.display = "none";
-  noiseOverlay.style.display = "none";
-  cloudOverlay.style.display = "block";
-  nameHeader.classList.remove("glitch");
-};
-
-const handleUnknown = () => {
-  // Remove button
-  if (nUnknown === 3) {
-    hideUnknown();
-  } else {
-  }
-  nUnknown += 1;
-};
-
-unknownBtn.addEventListener("click", handleUnknown);
-
 const addStatusSuccess = (element) => {
   element.classList.add("status-success");
   element.innerText = "OK";

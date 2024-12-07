@@ -69,10 +69,11 @@ li + li {
 #layout {
   display: flex;
   position: relative;
-  justify-content: center;
   min-height: 100vh;
   flex-direction: column;
   overflow: hidden;
+  background: url("./assets/pokkevillage.png") no-repeat center;
+  background-size: 70% 100%;
 }
 
 main {
@@ -81,6 +82,7 @@ main {
   margin: 0 1rem;
   justify-content: center;
   gap: 1rem;
+  height: min-content;
 }
 
 #content-main {
@@ -91,6 +93,10 @@ main {
 #content-sidebar {
   max-width: 100%;
   width: 14rem;
+}
+
+#about a {
+  color: var(--primary);
 }
 
 .text-gradient {
@@ -175,20 +181,35 @@ main {
 /* Header */
 
 header {
-  margin: 0 auto;
-  width: max-content;
+  display: flex;
+  justify-content: center;
+}
+
+header div {
+  margin: 1rem;
+  width: 52.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
 }
 
 /* Footer */
 
 footer {
   display: flex;
-  height: 2rem;
-  padding: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+footer div {
+  display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  text-align: center;
-  width: max-content;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  height: 2rem;
+  width: 52.7rem;
 }
 
 #footer-link {
@@ -220,33 +241,6 @@ footer {
   100% {
     transform: translateX(15%) translateY(15%);
   }
-}
-
-/* Background Clouds */
-
-#cloud-overlay {
-  display: none;
-  background-image: url("./assets/cloud.gif");
-  position: fixed;
-  pointer-events: none;
-  inset: -50%;
-  z-index: -1;
-}
-
-/* Unknown Button */
-
-#unknown-btn {
-  position: relative;
-  border: none;
-  font-size: 1em;
-  text-align: start;
-  padding: 0;
-  cursor: pointer;
-}
-
-#unknown-btn:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--secondary);
 }
 
 .glitch {
