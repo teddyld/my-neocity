@@ -6,7 +6,7 @@ https://teddyld.vercel.app/
 
 - HTML5
 - CSS3
-- JavaScript
+- (Vanilla) JavaScript
 - PostgreSQL
 
 ## About
