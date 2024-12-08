@@ -1,6 +1,6 @@
 const serverUrl = "https://teddyld-api.vercel.app";
 
-// Change window title on blur
+/* Change window title on blur */
 const documentTitle = document.querySelector("title");
 
 const handleWindowFocus = () => {
